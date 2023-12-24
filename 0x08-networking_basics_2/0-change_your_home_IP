@@ -1,17 +1,10 @@
 #!/usr/bin/env bash
 
-# Update the system
-sudo apt-get update
-sudo apt-get upgrade -y
+# changes the following domain resolve ips
+# localhost from 127.0.0.1 to 127.0.0.2
+# facebook.com from 157.240.11.35 to 8.8.8.8
 
-echo "127.0.0.2 localhost" | sudo tee -a /etc/hosts
-echo "8.8.8.8 facebook.com" | sudo tee -a /etc/hosts
-
-# Restart networking service to apply changes
-sudo service networking restart
-
-# Install Docker (assuming not already installed)
-sudo apt-get install docker.io -y
-
-# Run the checker on Docker
-sudo docker run your-checker-image
+cp /etc/hosts ~/hosts.new
+echo "127.0.0.2 localhost" > ~/hosts.new
+echo "8.8.8.8 facebook.com" >> ~/hosts.new
+sudo cp -f ~/hosts.new /etc/hosts
